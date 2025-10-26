@@ -308,65 +308,65 @@ Next.js 16のApp Routerは、最新のReact [Canaryリリース](https://react.d
 
 #### バージョン要件
 
-| 変更 | 詳細 |
-| --- | --- |
+| 変更              | 詳細                                                               |
+| ----------------- | ------------------------------------------------------------------ |
 | **Node.js 20.9+** | 最小バージョンは20.9.0 (LTS)に; Node.js 18はサポートされなくなった |
-| **TypeScript 5+** | 最小バージョンは5.1.0に |
-| **ブラウザ** | Chrome 111+、Edge 111+、Firefox 111+、Safari 16.4+ |
+| **TypeScript 5+** | 最小バージョンは5.1.0に                                            |
+| **ブラウザ**      | Chrome 111+、Edge 111+、Firefox 111+、Safari 16.4+                 |
 
 #### 削除
 
 以前非推奨とされていたこれらの機能が削除されたよ：
 
-| 削除されたもの | 代替 |
-| --- | --- |
-| **AMPサポート** | すべてのAMP APIと設定が削除された (`useAmp`、`export const config = { amp: true }`) |
-| **`next lint`コマンド** | BiomeまたはESLintを直接使用; `next build`はリンティングを実行しなくなった。コードモッドが利用可能: `npx @next/codemod@canary next-lint-to-eslint-cli .` |
-| **`devIndicators`オプション** | `appIsrStatus`、`buildActivity`、`buildActivityPosition`が設定から削除された。インジケーターは残る。 |
-| **`serverRuntimeConfig`、`publicRuntimeConfig`** | 環境変数(`.env`ファイル)を使用 |
-| **`experimental.turbopack`の場所** | 設定がトップレベルの`turbopack`に移動 (`experimental`内ではなくなった) |
-| **`experimental.dynamicIO`フラグ** | `cacheComponents`にリネーム |
-| **`experimental.ppr`フラグ** | PPRフラグは削除; Cache Componentsプログラミングモデルに進化中 |
-| **`export const experimental_ppr`** | ルートレベルのPPRエクスポートは削除; Cache Componentsプログラミングモデルに進化中 |
-| **自動`scroll-behavior: smooth`** | オプトインするにはHTML documentに`data-scroll-behavior="smooth"`を追加 |
-| **`unstable_rootParams()`** | 今後のマイナーリリースで提供予定の代替APIに取り組み中 |
-| **同期`params`、`searchParams` props**アクセス | 非同期で使う必要がある: `await params`、`await searchParams` |
-| **同期`cookies()`、`headers()`、`draftMode()`**アクセス | 非同期で使う必要がある: `await cookies()`、`await headers()`、`await draftMode()` |
-| **Metadataイメージルートの`params`引数** | 非同期`params`に変更; `generateImageMetadata`からの`id`は`Promise<string>`に |
-| **`next/image`のローカルsrcとクエリ文字列** | 列挙攻撃を防ぐため、`images.localPatterns`設定が必要に |
+| 削除されたもの                                          | 代替                                                                                                                                                    |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **AMPサポート**                                         | すべてのAMP APIと設定が削除された (`useAmp`、`export const config = { amp: true }`)                                                                     |
+| **`next lint`コマンド**                                 | BiomeまたはESLintを直接使用; `next build`はリンティングを実行しなくなった。コードモッドが利用可能: `npx @next/codemod@canary next-lint-to-eslint-cli .` |
+| **`devIndicators`オプション**                           | `appIsrStatus`、`buildActivity`、`buildActivityPosition`が設定から削除された。インジケーターは残る。                                                    |
+| **`serverRuntimeConfig`、`publicRuntimeConfig`**        | 環境変数(`.env`ファイル)を使用                                                                                                                          |
+| **`experimental.turbopack`の場所**                      | 設定がトップレベルの`turbopack`に移動 (`experimental`内ではなくなった)                                                                                  |
+| **`experimental.dynamicIO`フラグ**                      | `cacheComponents`にリネーム                                                                                                                             |
+| **`experimental.ppr`フラグ**                            | PPRフラグは削除; Cache Componentsプログラミングモデルに進化中                                                                                           |
+| **`export const experimental_ppr`**                     | ルートレベルのPPRエクスポートは削除; Cache Componentsプログラミングモデルに進化中                                                                       |
+| **自動`scroll-behavior: smooth`**                       | オプトインするにはHTML documentに`data-scroll-behavior="smooth"`を追加                                                                                  |
+| **`unstable_rootParams()`**                             | 今後のマイナーリリースで提供予定の代替APIに取り組み中                                                                                                   |
+| **同期`params`、`searchParams` props**アクセス          | 非同期で使う必要がある: `await params`、`await searchParams`                                                                                            |
+| **同期`cookies()`、`headers()`、`draftMode()`**アクセス | 非同期で使う必要がある: `await cookies()`、`await headers()`、`await draftMode()`                                                                       |
+| **Metadataイメージルートの`params`引数**                | 非同期`params`に変更; `generateImageMetadata`からの`id`は`Promise<string>`に                                                                            |
+| **`next/image`のローカルsrcとクエリ文字列**             | 列挙攻撃を防ぐため、`images.localPatterns`設定が必要に                                                                                                  |
 
 #### 動作変更
 
 Next.js 16でこれらの機能は新しいデフォルト動作を持つようになったよ：
 
-| 変更された動作 | 詳細 |
-| --- | --- |
-| **デフォルトバンドラー** | Turbopackがすべてのアプリのデフォルトバンドラーに; `next build --webpack`でオプトアウト |
-| **`images.minimumCacheTTL`のデフォルト** | 60秒から4時間(14400秒)に変更; cache-controlヘッダーなしの画像の再検証コストを削減 |
-| **`images.imageSizes`のデフォルト** | デフォルトサイズから`16`を削除 (プロジェクトの4.2%のみが使用); srcsetサイズとAPIバリエーションを削減 |
-| **`images.qualities`のデフォルト** | `[1..100]`から`[75]`に変更; `quality` propは`images.qualities`の最も近い値に強制される |
-| **`images.dangerouslyAllowLocalIP`** | 新しいセキュリティ制限がデフォルトでローカルIP最適化をブロック; プライベートネットワークのみ`true`に設定 |
-| **`images.maximumRedirects`のデフォルト** | 無制限から最大3リダイレクトに変更; 無効にするには`0`に設定、またはレアケースのために増やす |
-| **`@next/eslint-plugin-next`のデフォルト** | ESLint Flat Config形式がデフォルトに。ESLint v10でレガシー設定サポートが削除されることに対応 |
-| **プリフェッチキャッシュの動作** | レイアウトの重複排除とインクリメンタルなプリフェッチによる完全な書き直し |
-| **`revalidateTag()`のシグネチャ** | stale-while-revalidate動作のために2番目の引数として`cacheLife`プロファイルが必要に |
-| **TurbopackでのBabel設定** | babel設定が見つかった場合、自動的にBabelを有効化 (以前はハードエラーで終了) |
-| **ターミナル出力** | より明確なフォーマット、より良いエラーメッセージ、改善されたパフォーマンスメトリクスで再設計 |
-| **開発とビルドの出力ディレクトリ** | `next dev`と`next build`が別々の出力ディレクトリを使用し、同時実行を可能に |
-| **ロックファイルの動作** | 同じプロジェクトで複数の`next dev`または`next build`インスタンスを防ぐロックファイルメカニズムを追加 |
-| **Parallel routesの`default.js`** | すべてのparallel routeスロットで明示的な`default.js`ファイルが必要に; ない場合はビルドが失敗。以前の動作のために`notFound()`を呼び出すか`null`を返す`default.js`を作成 |
-| **モダンSass API** | `sass-loader`をv16にバージョンアップ。モダンSass構文と新機能をサポート |
+| 変更された動作                             | 詳細                                                                                                                                                                   |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **デフォルトバンドラー**                   | Turbopackがすべてのアプリのデフォルトバンドラーに; `next build --webpack`でオプトアウト                                                                                |
+| **`images.minimumCacheTTL`のデフォルト**   | 60秒から4時間(14400秒)に変更; cache-controlヘッダーなしの画像の再検証コストを削減                                                                                      |
+| **`images.imageSizes`のデフォルト**        | デフォルトサイズから`16`を削除 (プロジェクトの4.2%のみが使用); srcsetサイズとAPIバリエーションを削減                                                                   |
+| **`images.qualities`のデフォルト**         | `[1..100]`から`[75]`に変更; `quality` propは`images.qualities`の最も近い値に強制される                                                                                 |
+| **`images.dangerouslyAllowLocalIP`**       | 新しいセキュリティ制限がデフォルトでローカルIP最適化をブロック; プライベートネットワークのみ`true`に設定                                                               |
+| **`images.maximumRedirects`のデフォルト**  | 無制限から最大3リダイレクトに変更; 無効にするには`0`に設定、またはレアケースのために増やす                                                                             |
+| **`@next/eslint-plugin-next`のデフォルト** | ESLint Flat Config形式がデフォルトに。ESLint v10でレガシー設定サポートが削除されることに対応                                                                           |
+| **プリフェッチキャッシュの動作**           | レイアウトの重複排除とインクリメンタルなプリフェッチによる完全な書き直し                                                                                               |
+| **`revalidateTag()`のシグネチャ**          | stale-while-revalidate動作のために2番目の引数として`cacheLife`プロファイルが必要に                                                                                     |
+| **TurbopackでのBabel設定**                 | babel設定が見つかった場合、自動的にBabelを有効化 (以前はハードエラーで終了)                                                                                            |
+| **ターミナル出力**                         | より明確なフォーマット、より良いエラーメッセージ、改善されたパフォーマンスメトリクスで再設計                                                                           |
+| **開発とビルドの出力ディレクトリ**         | `next dev`と`next build`が別々の出力ディレクトリを使用し、同時実行を可能に                                                                                             |
+| **ロックファイルの動作**                   | 同じプロジェクトで複数の`next dev`または`next build`インスタンスを防ぐロックファイルメカニズムを追加                                                                   |
+| **Parallel routesの`default.js`**          | すべてのparallel routeスロットで明示的な`default.js`ファイルが必要に; ない場合はビルドが失敗。以前の動作のために`notFound()`を呼び出すか`null`を返す`default.js`を作成 |
+| **モダンSass API**                         | `sass-loader`をv16にバージョンアップ。モダンSass構文と新機能をサポート                                                                                                 |
 
 #### 非推奨
 
 これらの機能はNext.js 16で非推奨とされ、将来のバージョンで削除される予定だよ：
 
-| 非推奨 | 詳細 |
-| --- | --- |
-| `middleware.ts`ファイル名 | ネットワーク境界とルーティングフォーカスを明確にするため`proxy.ts`にリネーム |
-| `next/legacy/image`コンポーネント | 改善されたパフォーマンスと機能のために`next/image`を使用 |
-| `images.domains`設定 | 改善されたセキュリティ制限のために`images.remotePatterns`設定を使用 |
-| `revalidateTag()`の単一引数 | SWRには`revalidateTag(tag, profile)`を使用、またはActionsでread-your-writesには`updateTag(tag)`を使用 |
+| 非推奨                            | 詳細                                                                                                  |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `middleware.ts`ファイル名         | ネットワーク境界とルーティングフォーカスを明確にするため`proxy.ts`にリネーム                          |
+| `next/legacy/image`コンポーネント | 改善されたパフォーマンスと機能のために`next/image`を使用                                              |
+| `images.domains`設定              | 改善されたセキュリティ制限のために`images.remotePatterns`設定を使用                                   |
+| `revalidateTag()`の単一引数       | SWRには`revalidateTag(tag, profile)`を使用、またはActionsでread-your-writesには`updateTag(tag)`を使用 |
 
 #### その他の改善
 
